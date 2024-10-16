@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PhotographerSection>
+
+
+<section class="popular-categories" id="Photographer >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-heading">
+                    <h6>Our Photographers</h6>
+                    <h4>Check Out <em>Captured moments</em> innovate <em>Photographers</em></h4>
+                </div>
+            </div>
+            <div class="col-lg-6">
+            </div>
+        @foreach (var item in Model)
+        {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="popular-item">
+                        <div class="top-content">
+                            <div class="right">
+                                <h4>@item.photographerName</h4>
+                            </div>
+                        </div>
+                        <div class="thumb">
+                            <img src=@item.ImageFile alt="">
+                        </div>
+                        <div class="border-button">
+                            <a asp-controller="Profile" asp-action="Profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+        }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,274 @@
+﻿@{
+    ViewData["Title"] = "Photographer Profile";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Profile</title>
+    <style>
+        body {
+            padding-top: 80px; /* Add padding to ensure content is not hidden behind navbar */
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 220px;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .content-section {
+            margin-left: 240px; /* Account for sidebar width */
+            padding: 20px;
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .booking-form label {
+            font-weight: bold;
+            color: #003366; /* Dark blue color */
+        }
+
+        .booking-form input, .booking-form textarea {
+            border: 1px solid #003366;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .btn-primary {
+            background-color: deepskyblue;
+            border-color: deepskyblue;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #00a0d1;
+            border-color: #00a0d1;
+        }
+
+        .section-header h2 {
+            color: #003366;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .form-row .control-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .form-row .control-group:last-child {
+            margin-right: 0;
+        }
+
+        .content-section h2, .content-section p {
+            margin-bottom: 15px;
+        }
+
+        .feedback-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .feedback-section h3 {
+            text-align: center;
+            color: #003366; /* Dark blue color */
+            margin-bottom: 20px;
+        }
+
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .feedback-form label {
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .feedback-form input,
+        .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #003366;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .feedback-form textarea {
+            resize: vertical;
+        }
+
+        .feedback-form .btn {
+            background-color: deepskyblue;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .feedback-form .btn:hover {
+            background-color: #00a2d6; /* Slightly darker blue */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 sidebar">
+                <a onclick="showSection('calendar')">Calendar</a>
+                <a onclick="showSection('book-session')">Book Session</a>
+                <a onclick="showSection('feedback')">Feedback</a>
+            </nav>
+            <div class="col-md-6 content-section">
+                <div class="text-center mb-4">
+                    <img src="https://img.freepik.com/free-photo/happy-boy-with-adorable-smile_23-2149352352.jpg"
+                         alt="Photographer" class="profile-image mb-3">
+                    <h2>Natali Jathon</h2>
+                    <p>
+                        Professional photographer with over 10 years of experience capturing life's most precious
+                        moments. Specializing in weddings, portraits, and events, John combines creativity with
+                        technical expertise to create timeless, evocative images. Based in [City].
+                    </p>
+                </div>
+                <section id="calendar" class="section-content">
+                    <h3>Calendar</h3>
+                    <p class="fs-4">Available sessions:</p>
+                    <ul>
+                        <li>3pm - 4pm 10/10/2024</li>
+                        <li>11am - 12pm 10/11/2024</li>
+                    </ul>
+                </section>
+                <section id="book-session" class="section-content">
+                    <h3>Book a Session</h3>
+                    <div id="booking">
+                        <form name="sentMessage" id="bookingForm" novalidate="novalidate">
+                            <div class="form-row">
+                                <div class="control-group col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" id="fname" placeholder="E.g. John" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group col-md-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" id="lname" placeholder="E.g. Sina" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="control-group col-md-6">
+                                    <label>Mobile</label>
+                                    <input type="text" class="form-control" id="mobile" placeholder="E.g. 1-887-877-54" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group col-md-6">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="E.g. email@example.com" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="control-group col-md-6">
+                                    <label>Booking Date</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="date-1" placeholder="E.g. MM/DD/YYYY" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group col-md-6">
+                                    <label>Time</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="time-1" placeholder="E.g. 5:00 PM" required />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label>Special Request</label>
+                                <input type="text" class="form-control" id="comment" placeholder="E.g. Any special request" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="button mt-3">
+                                <button class="btn-primary" type="submit">Book My Schedule</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>            
+<section id="feedback" class="feedback-section">
+    <h3>Feedback</h3>
+    <form class="feedback-form">
+        <div class="form-group">
+            <label for="client-name">Client Name</label>
+            <input type="text" id="client-name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+            <label for="photographer-name">Photographer Name</label>
+            <input type="text" id="photographer-name" placeholder="Enter photographer name" required>
+        </div>
+        <div class="form-group">
+            <label for="feedback-text">Your Feedback</label>
+            <textarea id="feedback-text" rows="4" placeholder="Leave your feedback here" required></textarea>
+        </div>
+        <button type="submit" class="btn">Submit Feedback</button>
+    </form>
+</section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.getElementsByClassName('section-content');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = 'none';
+            }
+            document.getElementById(sectionId).style.display = 'block';
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            showSection('calendar'); // Default section
+        });
+    </script>
+</body>

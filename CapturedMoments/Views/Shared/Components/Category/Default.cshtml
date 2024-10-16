@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Category>
+
+<div class="top-categories">
+    <div class="container">
+        <div class="row">
+            @foreach(var item in Model)
+            {
+                <div class="col-lg col-sm-4">
+                    <a asp-action=Gallery asp-controller=Galleries>
+                        <div class="item">
+                            <div class="icon">
+                                <img src="@item.Image" alt="">
+                            </div>
+                            <h4>@item.CategoryName</h4>
+                        </div>
+                    </a>
+                </div>
+            }           
+        </div>
+    </div>
+</div>
