@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CapturedMoments.Data;
 using CapturedMoments.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CapturedMoments.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
+    [Authorize(Roles = "Admin")]
     public class PhotographerSectionsController : Controller
     {
         private readonly AppDbContext _context;

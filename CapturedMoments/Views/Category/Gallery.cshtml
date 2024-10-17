@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Gallery>
+
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<section class="featured-contests">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h6>Featured Contests</h6>
+                    <h4>View Most <em>Popular</em> Category <em>Contests</em></h4>
+                </div>
+                @foreach(var item in Model)
+                {
+                    <div class="col-lg-6">
+                        <div class="item">
+                            <div class="thumb">
+                                <img src="@item.Image" alt="">
+                                <div class="hover-effect">
+                                    <div class="content">
+                                        <h4>Photographer Name</h4>
+                                        <div class="border-button">
+                                            <a asp-controller="Profile" asp-action="Profile">View Profile</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+               
+
+            </div>
+        </div>
+    </div>
+</section>

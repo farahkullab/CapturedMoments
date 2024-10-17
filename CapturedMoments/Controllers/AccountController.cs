@@ -1,6 +1,7 @@
 ﻿using CapturedMoments.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CapturedMoments.Controllers
 {
@@ -8,12 +9,13 @@ namespace CapturedMoments.Controllers
     {
         private UserManager<ApplicationUser> userManager;
         private SignInManager<ApplicationUser> signInManager;
+        private RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> _signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> _signInManager,RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             signInManager = _signInManager;
+            _roleManager = roleManager;
         }
 
         #region Register
@@ -65,7 +67,15 @@ namespace CapturedMoments.Controllers
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Dashboard" });
+                    if (User.IsInRole("Photographer"))
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "PhotographerDashboard" });
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Dashboard" });
+                    }
+                    
                 }
                 ModelState.AddModelError("", "Invalid User or password");
                 return View(model);
@@ -79,6 +89,100 @@ namespace CapturedMoments.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        #region Roles 
+        [HttpGet]
+        public async Task<IActionResult> RolesList()
+        {
+            return View(await _roleManager.Roles.ToListAsync());
+        }
+
+        [HttpGet]
+        public IActionResult CreateRole()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityRole role = new IdentityRole()
+                {
+                    Name = model.RoleName
+                };
+                var result = await _roleManager.CreateAsync(role);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(RolesList));
+                }
+                foreach (var err in result.Errors)
+                {
+                    ModelState.AddModelError(err.Code, err.Description);
+                }
+                return View(model);
+            }
+            return View(model);
+        }
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditRole(string id)
+        {
+            if (id == null) { return NotFound(); }
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null) { return NotFound(); }
+            EditRoleViewModel model = new EditRoleViewModel
+            {
+                RoleId = role.Id,
+                RoleName = role.Name
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var x = await _roleManager.FindByIdAsync(model.RoleId);
+                if (x == null) { return NotFound(); }
+                x.Name = model.RoleName;
+                var result = await _roleManager.UpdateAsync(x);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(RolesList));
+                }
+                foreach (var err in result.Errors)
+                {
+                    ModelState.AddModelError(err.Code, err.Description);
+                }
+                return View(model);
+            }
+            return View(model);
+
+        }
+
+
+
+
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            if (id == null) { return NotFound(); }
+            var role = await _roleManager.FindByIdAsync((string)id);
+            if (role == null) { return NotFound(); }
+            var result = await _roleManager.DeleteAsync(role);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(RolesList));
+            }
+            return RedirectToAction(nameof(RolesList));
+        }
+        #endregion
 
     }
 }

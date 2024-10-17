@@ -6,7 +6,7 @@
             @foreach(var item in Model)
             {
                 <div class="col-lg col-sm-4">
-                    <a asp-action=Gallery asp-controller=Galleries>
+                    <a asp-action="Gallery" asp-controller="Category" asp-route-id="@item.CategoryId">
                         <div class="item">
                             <div class="icon">
                                 <img src="@item.Image" alt="">
