@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CapturedMoments.Models.Feedback>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotographerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeedbackText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotographerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedbackText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FeedbackId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FeedbackId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FeedbackId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

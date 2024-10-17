@@ -1,31 +1,32 @@
-﻿@model CapturedMoments.Models.PhotographerSection
+﻿@model CapturedMoments.Models.Feedback
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
-<h4>PhotographerSection</h4>
+<h4>Feedback</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4" >
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FeedbackId" />
             <div class="form-group">
-                <label asp-for="photographerName" class="control-label"></label>
-                <input asp-for="photographerName" class="form-control" />
-                <span asp-validation-for="photographerName" class="text-danger"></span>
+                <label asp-for="PhotographerName" class="control-label"></label>
+                <input asp-for="PhotographerName" class="form-control" />
+                <span asp-validation-for="PhotographerName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageFile" class="font-weight-bold "></label>
-                <input asp-for="ImageFile" class="form-control form-control-lg" type="file" accept="image/*" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                <label asp-for="FeedbackText" class="control-label"></label>
+                <input asp-for="FeedbackText" class="form-control" />
+                <span asp-validation-for="FeedbackText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="btnText" class="control-label"></label>
-                <input asp-for="btnText" class="form-control" />
-                <span asp-validation-for="btnText" class="text-danger"></span>
+                <label asp-for="ClientName" class="control-label"></label>
+                <input asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -43,7 +44,7 @@
                 <span asp-validation-for="CreationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

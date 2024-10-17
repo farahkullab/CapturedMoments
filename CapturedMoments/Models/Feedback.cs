@@ -1,4 +1,6 @@
-﻿namespace CapturedMoments.Models.CommonProp
+﻿using CapturedMoments.Models.CommonProp;
+
+namespace CapturedMoments.Models
 {
     public class Feedback : SharedPropcs
     {

@@ -1,8 +1,7 @@
-﻿using CapturedMoments.Models.CommonProp;
-using CapturedMoments.Models;
+﻿using CapturedMoments.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using LMSArtiKeys.Models.ViewModels;
+using CapturedMoments.Models.ViewModels;
 
 namespace CapturedMoments.Data
 {

@@ -1,5 +1,5 @@
 using CapturedMoments.Data;
-using LMSArtiKeys.Models.ViewModels;
+using CapturedMoments.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace LMSArtiKeys.Models.ViewModels
+namespace CapturedMoments.Models.ViewModels
 {
     public class ApplicationUser : IdentityUser
     {
@@ -10,4 +10,3 @@ namespace LMSArtiKeys.Models.ViewModels
     }
 }
 
- 
