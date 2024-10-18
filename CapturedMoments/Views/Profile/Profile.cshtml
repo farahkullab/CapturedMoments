@@ -1,5 +1,7 @@
-﻿@{
+﻿@model Photographer
+@{
     ViewData["Title"] = "Photographer Profile";
+    // Layout = null;
 }
 
 
@@ -163,20 +165,18 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-3 sidebar">
+            <nav class="nav flex-column sidebar">
                 <a onclick="showSection('calendar')">Calendar</a>
                 <a onclick="showSection('book-session')">Book Session</a>
                 <a onclick="showSection('feedback')">Feedback</a>
             </nav>
             <div class="col-md-6 content-section">
                 <div class="text-center mb-4">
-                    <img src="https://img.freepik.com/free-photo/happy-boy-with-adorable-smile_23-2149352352.jpg"
+                    <img src="@Model.Image"
                          alt="Photographer" class="profile-image mb-3">
-                    <h2>Natali Jathon</h2>
+                    <h2>@Model.PhotograperName</h2>
                     <p>
-                        Professional photographer with over 10 years of experience capturing life's most precious
-                        moments. Specializing in weddings, portraits, and events, John combines creativity with
-                        technical expertise to create timeless, evocative images. Based in [City].
+                        @Model.Bio
                     </p>
                 </div>
                 <section id="calendar" class="section-content">
@@ -237,7 +237,9 @@
                             </div>
                         </form>
                     </div>
-                </section>            
+                </section>   
+                
+
 <section id="feedback" class="feedback-section">
     <h3>Feedback</h3>
     <form class="feedback-form">

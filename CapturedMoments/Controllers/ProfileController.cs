@@ -18,14 +18,14 @@ namespace CapturedMoments.Controllers
                 return NotFound();
             }
 
-            var profile = db.Photographers.FirstOrDefault(p => p.PhotographerId == id);
+            var profile = db.Photographers.Find(id);
 
             if (profile == null)
             {
                 return NotFound();
             }
 
-            return View();
+            return View(profile);
        }
     }
 }

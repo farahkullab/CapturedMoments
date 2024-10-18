@@ -57,11 +57,38 @@ namespace CapturedMoments.Areas.Dashboard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PhotographerId,PhotograperName,Bio,Image,SubsicriptionStatus,SocialMediaURL,SessionId,IsActive,IsDeleted,CreationDate")] Photographer photographer)
+        public async Task<IActionResult> Create(Photographer photographer)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(photographer);
+                if (ModelState.IsValid)
+                {
+                    if (photographer.ImageFile != null && photographer.ImageFile.Length > 0)
+                    {
+                        // Define the path to save the image
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                        var fileName = Path.GetFileName(photographer.ImageFile.FileName);
+                        var filePath = Path.Combine(uploadsFolder, fileName);
+
+                        // Ensure the uploads folder exists
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
+                        // Save the file to the server
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await photographer.ImageFile.CopyToAsync(fileStream);
+                        }
+
+                    // Set the image path in the model (you may want to adjust this based on your requirements)
+                    photographer.Image = $"/images/{fileName}";
+
+                        _context.Add(photographer);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    _context.Add(photographer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -89,7 +116,7 @@ namespace CapturedMoments.Areas.Dashboard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PhotographerId,PhotograperName,Bio,Image,SubsicriptionStatus,SocialMediaURL,SessionId,IsActive,IsDeleted,CreationDate")] Photographer photographer)
+        public async Task<IActionResult> Edit(int id,Photographer photographer)
         {
             if (id != photographer.PhotographerId)
             {
@@ -100,6 +127,34 @@ namespace CapturedMoments.Areas.Dashboard.Controllers
             {
                 try
                 {
+                    if (photographer.ImageFile != null && photographer.ImageFile.Length > 0)
+                    {
+                        // Define the path to save the image
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                        var fileName = Path.GetFileName(photographer.ImageFile.FileName);
+                        var filePath = Path.Combine(uploadsFolder, fileName);
+
+                        // Ensure the uploads folder exists
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
+                        // Save the file to the server
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await photographer.ImageFile.CopyToAsync(fileStream);
+                        }
+
+                        // Update the image path in the model
+                        photographer.Image = $"/images/{fileName}";
+                    }
+                    else
+                    {
+                        // If no new file is uploaded, retain the existing image path
+                        var existingCategory = await _context.Categories.FindAsync(id);
+                        photographer.Image = existingCategory.Image;
+                    }
                     _context.Update(photographer);
                     await _context.SaveChangesAsync();
                 }

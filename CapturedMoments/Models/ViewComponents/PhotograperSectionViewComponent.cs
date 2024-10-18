@@ -13,7 +13,7 @@ namespace CapturedMoments.Models.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            return View(db.Sections.ToList());
+            return View(db.Photographers.ToList());
         }
     }
 }

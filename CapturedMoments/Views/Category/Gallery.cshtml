@@ -6,33 +6,26 @@
 
 <section class="featured-contests">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row" style="display: flex; flex-wrap: wrap; gap: 0;">
+            <div class="col-lg-12" style="padding: 0;">
                 <div class="section-heading text-center">
                     <h6>Featured Contests</h6>
                     <h4>View Most <em>Popular</em> Category <em>Contests</em></h4>
                 </div>
-                @foreach(var item in Model)
-                {
-                    <div class="col-lg-6">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="@item.Image" alt="">
-                                <div class="hover-effect">
-                                    <div class="content">
-                                        <h4>Photographer Name</h4>
-                                        <div class="border-button">
-                                            <a asp-controller="Profile" asp-action="Profile">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-               
-
             </div>
         </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6 mb-4">
+                    <div class="item">
+                        <div class="thumb" style="width: 100%; height: auto; display: block;">
+                            <img src="@item.Image" alt="">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-</section>
+</section>   
+

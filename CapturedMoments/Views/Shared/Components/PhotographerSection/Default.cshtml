@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PhotographerSection>
+﻿@model IEnumerable<Photographer>
 
 
-<section class="popular-categories" id="Photographer >
+<section class="popular-categories" id="myComponent">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
@@ -18,14 +18,14 @@
                     <div class="popular-item">
                         <div class="top-content">
                             <div class="right">
-                                <h4>@item.photographerName</h4>
+                                <h4>@item.PhotograperName</h4>
                             </div>
                         </div>
                         <div>
                             <img src="@item.Image">
                         </div>
                         <div class="border-button">
-                            <a asp-controller="Profile" asp-action="Profile">View Profile</a>
+                            <a asp-controller="Profile" asp-action="Profile" asp-route-id="@item.PhotographerId">View Profile</a>
                         </div>
                     </div>
                 </div>
